@@ -7,7 +7,7 @@
 ```yaml
 owners:
 - '588521648349642753' # Your UserID (I Used Mine As An Example Here)
-bot_token: 'OpqUsdjSghhsygHFHkfuyzvN.XZbT1w.AJncHKDUnvusDHFik0Q-Zk-8hGz' # Your Bots zToken
+bot_token: 'OpqUsdjSghhsygHFHkfuyzvN.XZbT1w.AJncHKDUnvusDHFik0Q-Zk-8hGz' # Your Bots Token
 ```
 
 **When first using the executable, a template config file is generated, which you must modify**
