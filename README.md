@@ -17,4 +17,4 @@ bot_token: 'OpqUsdjSghhsygHFHkfuyzvN.XZbT1w.AJncHKDUnvusDHFik0Q-Zk-8hGz' # Your 
 **/logs**: Displays log the bot has stored. A new one is generated daily, but all logs are saved in the /logs directory (this is generated in the same directory of the bots executable on your PC  
 **/help**: Shows basic command usage  
 
-**Using commands through the Discord bot is still dangerous!  Be cautious with who you add to the bots whitelist**
+**Using commands through the Discord bot is still dangerous!  Be cautious with who you add to the bots owners**
