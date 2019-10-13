@@ -1,4 +1,4 @@
-# What is CMD Bot>
+# What is CMD Bot
 ### Cmd bot is a simple, yet powerful Discord bot for running command line tools from the comfort of a discord chat room. It comes with error logging, and a onfiguration file where you can set bot owners + bot token. The default prefix for the bot is /
 
 **When first using the executable, a template config file is generated, which you must modify**
