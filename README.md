@@ -1,5 +1,6 @@
 
 **To use this bot, you must install node.js: https://nodejs.org/**
+**Once node.js is installed, cd into the `build` folder and run inside the command line: `npm i`**
 # What is CMD Bot
 ### Cmd bot is a simple, yet powerful Discord bot for running command line tools from the comfort of a discord chat room. It comes with error logging, and a configuration file where you can set bot owners + bot token. The default prefix for the bot is /
 

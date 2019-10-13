@@ -62,7 +62,7 @@ client.on('message', async msg => {
     }
     msg.react('✅')
     if(command == 'logs') {}
-    else if (!args[0]) logger(`- User: ${msg.author.tag} (${msg.author.id})\n    !! Used: /${command}\n    !! But Didn't Specify A Command`)
+    else if (!args[0]) logger(`- User: ${msg.author.tag} (${msg.author.id})\n    !! Used: /${command}\n    !! But Didn't Specify Any Arguements`)
     else logger(`- User: ${msg.author.tag} (${msg.author.id})\n    + Used: /${command}\n    + With Arguements: ${args.join(' ')}`)
     if (command === 'exec') {
         if (!args[0]) return msg.channel.send('No command given!')
