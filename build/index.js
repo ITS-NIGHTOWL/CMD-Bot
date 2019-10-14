@@ -62,10 +62,29 @@ client.on('message', async msg => {
         return msg.react('❌')
     }
     msg.react('✅')
-    if (command == 'logs') {} else if (!args[0]) logger(`- User: ${msg.author.tag} (${msg.author.id})\n    !! Used: /${command}\n    !! But Didn't Specify Any Arguements`)
+    switch (command) {
+    case 'logs':
+       if (!args[0]) logger(`- User: ${msg.author.tag} (${msg.author.id})\n    !! Used: /${command}\n    !! But Didn't Specify Any Arguements`)
     else logger(`- User: ${msg.author.tag} (${msg.author.id})\n    + Used: /${command}\n    + With Arguements: ${args.join(' ')}`)
-    if (command === 'exec') {
-        if (!args[0]) return msg.channel.send('No command given!')
+    break;
+    case'exec': 
+       if (args[0] === 'cd') {
+                if(args[1] === 'back' || '../') {
+            workingDir = workingDir.slice(0, workingDir.lastIndexOf(dirType))
+            console.log(process.cwd())
+            console.log(workingDir)
+            msg.channel.send(`>>> Bot is now in directory: \`${workingDir}\``)
+        }
+        else {
+            if(fs.existsSync(workingDir + `${dirType + args[0]}`)) {
+                workingDir = workingDir + `${dirType + args[0]}`
+                msg.channel.send(`>>> Bot is now in directory: \`${workingDir}\``)
+            }
+            else {
+                msg.channel.send(`>>> Directory: \`${workingDir + `/${args[0]}`}\` does not exist!`)
+            }
+        }}
+        else if (!args[0]) return msg.channel.send('No command given!')
         exec(args.join(' '),{
             cwd: workingDir
         }, (error, stdout, stderr) => {
@@ -85,37 +104,18 @@ client.on('message', async msg => {
                 });
             }
         })
-    }
-    if (command == 'cd') {
-        if(args[0] == 'back') {
-            workingDir = workingDir.slice(0, workingDir.lastIndexOf(dirType))
-            console.log(process.cwd())
-            console.log(workingDir)
-            msg.channel.send(`>>> Bot is now in directory: \`${workingDir}\``)
-        }
-        else if (args[0].includes('../')) {msg.channel.send('Please use `/cd back`')}
-        else {
-            if(fs.existsSync(workingDir + `${dirType + args[0]}`)) {
-                workingDir = workingDir + `${dirType + args[0]}`
-                msg.channel.send(`>>> Bot is now in directory: \`${workingDir}\``)
-            }
-            else {
-                msg.channel.send(`>>> Directory: \`${workingDir + `/${args[0]}`}\` does not exist!`)
-            }
-        }
-    }
-    if (command == 'dir') {
+    break;
+    case 'dir':
         msg.channel.send(`>>> Bot is currently in directory: \`${workingDir}\``)
-    }
-    if (command == 'eval') {
+    break;
+    case 'eval':
         function response(val) {
-            return new Discord.RichEmbed()
+            new Discord.RichEmbed()
                 .setTitle('Javascript')
                 .addField('Code:', `\`\`\`js\n${args.join(' ')}\`\`\``)
                 .addField('Returned:', String(val))
                 .setColor('RANDOM')
                 .setFooter(`Bot managed by: ${ownerNames.join(', ')} | Developed by: ITS_N1GH7OWL#6550 + Contributors on: https://github.com/itsretr0n/CMD-Bot`)
-            }
         try {
             var result = eval(args.join(' '))
             if (result) {
@@ -131,13 +131,14 @@ client.on('message', async msg => {
             })
         }
     }
-    if (command == 'logs') {
+    break;
+    case 'logs':
         logger(`- User: ${msg.author.tag} (${msg.author.id})\n    + Used: /${command}\n    + To View This File`)
         haste.post(fs.readFileSync(pathCheck(`/logs/${date}.log`))).then(link => {
             msg.author.send(`>>> Logs can be viewed here: ${link}`)
         })
-    }
-    if (command == 'help') {
+    break;
+    case 'help':
         msg.channel.send(`>>> **__Commands__**\n**/exec** *<command>* *<..args>*: Executes a command through the command line\n**/eval** *<js code>*: Evaluates any javascript code entered and returns a value/response. The Discord.js library is integrated with the command. __Do not wrap code in codeblock!__\n**/cd** *<back/folder name>*: Allows you to move back and foward directories. Perfect for changing where the exec command functions\n**/dir**: Displays the current directory the exec command runs in\n**/logs**: DM's the bots logs. New logs are generated on a daily basis`)
     }
 })
