@@ -8,6 +8,8 @@ const fs = require('fs-extra')
 const hastebin = require('hastebin.js');
 const haste = new hastebin();
 const YAML = require('yaml')
+var workingDir = process.cwd()
+const dirType = (process.platform === "win32") ? '\\' : '/'
 const pathCheck = (file) => {
     return process.cwd() + file
 }
@@ -64,7 +66,9 @@ client.on('message', async msg => {
     else logger(`- User: ${msg.author.tag} (${msg.author.id})\n    + Used: /${command}\n    + With Arguements: ${args.join(' ')}`)
     if (command === 'exec') {
         if (!args[0]) return msg.channel.send('No command given!')
-        exec(args.join(' '), (error, stdout, stderr) => {
+        exec(args.join(' '),{
+            cwd: workingDir
+        }, (error, stdout, stderr) => {
             function response(val) {
                 return new Discord.RichEmbed()
                     .setTitle('Terminal')
@@ -81,6 +85,27 @@ client.on('message', async msg => {
                 });
             }
         })
+    }
+    if (command == 'cd') {
+        if(args[0] == 'back') {
+            workingDir = workingDir.slice(0, workingDir.lastIndexOf(dirType))
+            console.log(process.cwd())
+            console.log(workingDir)
+            msg.channel.send(`>>> Bot is now in directory: \`${workingDir}\``)
+        }
+        else if (args[0].includes('../')) {msg.channel.send('Please use `/cd back`')}
+        else {
+            if(fs.existsSync(workingDir + `${dirType + args[0]}`)) {
+                workingDir = workingDir + `${dirType + args[0]}`
+                msg.channel.send(`>>> Bot is now in directory: \`${workingDir}\``)
+            }
+            else {
+                msg.channel.send(`>>> Directory: \`${workingDir + `/${args[0]}`}\` does not exist!`)
+            }
+        }
+    }
+    if (command == 'dir') {
+        msg.channel.send(`>>> Bot is currently in directory: \`${workingDir}\``)
     }
     if (command == 'eval') {
         function response(val) {
@@ -113,7 +138,7 @@ client.on('message', async msg => {
         })
     }
     if (command == 'help') {
-        msg.channel.send(`>>> **__Commands__**\n**/exec** *<command>* *<..args>*: Executes a command through the command line\n**/eval** *<js code>*: Evaluates any javascript code entered and returns a value/response. The Discord.js library is integrated with the command. __Do not wrap code in codeblock!__\n**/logs**: DM's the bots logs. New logs are generated on a daily basis`)
+        msg.channel.send(`>>> **__Commands__**\n**/exec** *<command>* *<..args>*: Executes a command through the command line\n**/eval** *<js code>*: Evaluates any javascript code entered and returns a value/response. The Discord.js library is integrated with the command. __Do not wrap code in codeblock!__\n**/cd** *<back/folder name>*: Allows you to move back and foward directories. Perfect for changing where the exec command functions\n**/dir**: Displays the current directory the exec command runs in\n**/logs**: DM's the bots logs. New logs are generated on a daily basis`)
     }
 })
 if (config.bot_token) {
