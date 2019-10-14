@@ -9,7 +9,7 @@ const hastebin = require('hastebin.js');
 const haste = new hastebin();
 const YAML = require('yaml')
 const pathCheck = (file) => {
-        return process.cwd() + file
+    return process.cwd() + file
 }
 const __date = new Date(Date.now())
 const date = `${__date.getFullYear()}-${__date.getMonth() + 1}-${__date.getDate()}`
@@ -32,15 +32,14 @@ client.on('ready', async () => {
         if (err) console.log(err)
     })
     logger(`________________________________\nBot started at: (${new Date(Date.now())})`)
-    console.log(chalk.blue('Bot developed developed by ' + chalk.red('itsretr0n (https://github.com/itsretr0n)') + '. For help, add me on discord: ITS_N1GH7OWL#6550'))
+    console.log(chalk.blue('Bot developed by ' + chalk.red('itsretr0n (https://github.com/itsretr0n)') + ' with help from contribuors on the bots Github repo (https://github.com/itsretr0n/CMD-Bot). For assistance, add me on discord: ITS_N1GH7OWL#6550'))
     console.log(chalk.green(`Cmd Bot Has Successfully Started`))
     try {
-    await owners.forEach((user) => {
-        ownerNames.push(client.users.get(user).tag)
-    })
-    console.log(chalk.yellow(`Owners Are: ${ownerNames.join(', ')}`))
-    }
-    catch (e) {
+        await owners.forEach((user) => {
+            ownerNames.push(client.users.get(user).tag)
+        })
+        console.log(chalk.yellow(`Owners Are: ${ownerNames.join(', ')}`))
+    } catch (e) {
         console.error(chalk.red('An invalid owner ID was provided in the config.yaml file!'))
         process.exit()
     }
@@ -61,8 +60,7 @@ client.on('message', async msg => {
         return msg.react('❌')
     }
     msg.react('✅')
-    if(command == 'logs') {}
-    else if (!args[0]) logger(`- User: ${msg.author.tag} (${msg.author.id})\n    !! Used: /${command}\n    !! But Didn't Specify Any Arguements`)
+    if (command == 'logs') {} else if (!args[0]) logger(`- User: ${msg.author.tag} (${msg.author.id})\n    !! Used: /${command}\n    !! But Didn't Specify Any Arguements`)
     else logger(`- User: ${msg.author.tag} (${msg.author.id})\n    + Used: /${command}\n    + With Arguements: ${args.join(' ')}`)
     if (command === 'exec') {
         if (!args[0]) return msg.channel.send('No command given!')
@@ -73,7 +71,7 @@ client.on('message', async msg => {
                     .addField('Input:', `\`\`\`${args.join(' ')}\`\`\``)
                     .addField('Output:', String(val))
                     .setColor('RANDOM')
-                    .setFooter(`Bot managed by: ${ownerNames.join(', ')} | Developed by: ITS_N1GH7OWL#6550`)
+                    .setFooter(`Bot managed by: ${ownerNames.join(', ')} | Developed by: ITS_N1GH7OWL#6550 + Contributors on: https://github.com/itsretr0n/CMD-Bot`)
             }
             if (stdout.length <= 1024) {
                 msg.channel.send(response(`\`\`\`autohotkey\n${stdout}\`\`\``))
@@ -91,7 +89,7 @@ client.on('message', async msg => {
                 .addField('Code:', `\`\`\`js\n${args.join(' ')}\`\`\``)
                 .addField('Returned:', String(val))
                 .setColor('RANDOM')
-                .setFooter(`Bot managed by: ${ownerNames.join(', ')} | Developed by: ITS_N1GH7OWL#6550`)
+                .setFooter(`Bot managed by: ${ownerNames.join(', ')} | Developed by: ITS_N1GH7OWL#6550 + Contributors on: https://github.com/itsretr0n/CMD-Bot`)
             }
         try {
             var result = eval(args.join(' '))
